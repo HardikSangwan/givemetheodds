@@ -1,16 +1,19 @@
 from json import load
-import json
+import uvicorn
+import os
 from pandas import DataFrame, read_sql_query
 from networkx import from_pandas_edgelist, shortest_simple_paths, path_weight
 from math import ceil
 from sqlite3 import connect
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from typer import Typer
 
 #__app_name__ = "givemetheodds"
 #__version__ = "0.1.0"
-
+app_input = Typer()
 app = FastAPI()
+
 
 origins = [
     "http://localhost",
@@ -38,16 +41,24 @@ def readConfigDB(db: str) -> DataFrame: #Add Exception/Edge Case Handles
 def readConfigJSON(config_file: str) -> tuple: #Add Exception/Edge Case Handles
     with open(config_file) as f:
         config_dict = load(f)
+        path = os.path.dirname(f.name)
     autonomy = config_dict['autonomy']
     departure = config_dict['departure']
     arrival = config_dict['arrival']
-    routes_db = config_dict['routes_db']
+    routes_db = path + '/' + config_dict['routes_db']
     routes_df = readConfigDB(routes_db)
 
     return (autonomy, departure, arrival, routes_df)
 
+def readRebelJSONSTR(rebel_file: str) -> tuple:
+    with open(rebel_file) as f:
+        rebel_dict = load(f)
+    countdown = rebel_dict['countdown']
+    bounty_hunters = rebel_dict['bounty_hunters']
+    return (countdown, bounty_hunters)
+
 def readRebelJSON(rebel_file: UploadFile) -> tuple:
-    with open(rebel_file.filename) as f:
+    with rebel_file.file as f:
         rebel_dict = load(f)
     countdown = rebel_dict['countdown']
     bounty_hunters = rebel_dict['bounty_hunters']
@@ -94,11 +105,11 @@ def createJSON(route_probs):
     return routeDict
 
 @app.post('/uploadfile/')
-async def main(rebel_filename: UploadFile): #Min Route Probs Not Proper
+async def uploadFile(rebel_filename: UploadFile): #Min Route Probs Not Proper
+    
+    autonomy, departure, arrival, routes_df = readConfigJSON(os.environ['odds_config_filename'])
     if not rebel_filename:
         return {'No File Sent'}
-    init_filename = 'millennium-falcon.json'
-    autonomy, departure, arrival, routes_df = readConfigJSON(init_filename)
     countdown, bounty_hunters = readRebelJSON(rebel_filename)
     possible_routes, RoutesGraph = possibleRoutes(arrival, departure, countdown, autonomy, routes_df)
     
@@ -108,11 +119,11 @@ async def main(rebel_filename: UploadFile): #Min Route Probs Not Proper
     else:
         return {'route:':'No Way Jose'}
 
-    #print(min(route_probs))
-
+@app_input.command()
+def init_handle(init_filename: str): 
+    os.environ['odds_config_filename'] = init_filename
+    uvicorn.run("odds_backend:app", host="0.0.0.0", port=8000, reload=True)
+    #app()
 
 if __name__=="__main__":
-    app()
-
-#{"autonomy": 6,"departure": "Tatooine","arrival": "Endor","routes_db": "universe.db"}
-#{"countdown": 7, "bounty_hunters": [{"planet": "Hoth", "day": 6 }, {"planet": "Hoth", "day": 7 },{"planet": "Hoth", "day": 8 }]}
+    app_input()

@@ -1,29 +1,23 @@
 <template>
   <div class="file-works">
-    <h2>UPLOAD</h2>
+    <h2>UPLOAD INTERCEPT</h2>
     <form class="upload">
       <input type="file" name="uploadFile" accept=".json" required />
-      <br/><br/>
-      <input type="submit" />
+      <input type="submit" value="Find Path"/>
     </form>
     <div>
-      <h2>ODDS</h2>
-      <h4 id="file-details"></h4>
+      <h2 id="file-details">ODDS: </h2>
     </div>
+  </div>
+  <div id="bottom">
+    <p>For feedback/issues, email the developer</p>
+    <a href="mailto:hardik.sngn@gmail.com?subject=Giskard Interview Next Steps" target="_blank" rel="noopener"> <img alt="Mail logo" src="../assets/mail_logo.png" width="30" height="22" style="vertical-align: bottom;"> </a>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FileWorks',
-  props: {
-    msg: String
-  }, 
-  data(){
-    return {
-      filename: '',
-    };
-  }
+  name: 'FileWorks'
 }
 document.addEventListener("DOMContentLoaded", () =>
 {
@@ -34,18 +28,28 @@ uploadForm.addEventListener('submit', ev => {
     let file = ev.target.uploadFile.files[0]   
     let formData = new FormData();
     formData.append('rebel_filename', file)
-    console.log(formData)
+    //console.log(formData)
     fetch('http://localhost:8000/uploadfile/', {
         method: 'POST',
         body: formData
     }).then(result => result.text()).then(r => {
-        //console.log(r)
+        r = JSON.parse(r)
         document.querySelector('#file-details')
-        .innerText = r
-        //window.location.search = null
-        //window.location.reload();
+        .innerText = 'ODDS: ' + r.odds + ' %'
     });
 
 });
 });
 </script>
+
+<style>
+li {
+  display: inline;
+  margin: 0px 10px 0 0;
+  text-align:center;
+}
+#bottom
+{
+  margin-top: 75px
+}
+</style>

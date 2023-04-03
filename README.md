@@ -2,14 +2,19 @@
  Path Finding Problem (Interview Assessment). Python BackEnd Vue FrontEnd.
 
 <ins>On the Backend:</ins>
-pip install requirements.txt
-uvicorn odds_backend:app
+python odds_backend.py examples/example1/millennium-falcon.json
+
+The command initializes the millennium-falcon data and then starts up the API Server
 
 - Pathfinding using networkx
-- API using FastAPI
+- API using FastAPI, uvicorn
 - Database connection through sqlite3
 - Some basic data operations using pandas and json and math libraries
 - CLI using Typer
+
+- For a command line interface, run the script or the executable
+python givemetheodds.py examples/example1/millennium-falcon.json examples/example1/empire.json
+./givemetheodds example1/millennium-falcon.json example1/empire.json
 
 <ins>On the Frontend:</ins>
 
