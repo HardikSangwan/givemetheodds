@@ -7,6 +7,10 @@
 
 <ins>On the Backend:</ins>
 
+cd backend
+
+pip install -r requirements.txt
+
 python odds_backend.py examples/example1/millennium-falcon.json
 
 The command initializes the millennium-falcon data and then starts up the API Server
@@ -18,12 +22,18 @@ The command initializes the millennium-falcon data and then starts up the API Se
 - CLI using Typer
 
 - For a command line interface, run the script or the executable
+
+
 python givemetheodds.py examples/example1/millennium-falcon.json examples/example1/empire.json
+
 ./givemetheodds example1/millennium-falcon.json example1/empire.json
 
 <ins>On the Frontend:</ins>
 
+cd frontend
+
 npm install
+
 npm run serve
 
 - moving stars implemented by following this article: https://betterprogramming.pub/fun-with-html-canvas-lets-create-a-star-field-a46b0fed5002
