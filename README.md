@@ -1,11 +1,9 @@
 # givemetheodds
  Path Finding Problem (Interview Assessment). Python BackEnd Vue FrontEnd.
 
-<br>
 
  [!Frontend Screenshot](https://raw.githubusercontent.com/HardikSangwan/givemetheodds/main/backend/resources/Frontend_Screenshot.jpg?raw=true)
 
-[!Frontend Screenshot](Frontend_screenshot.jpg)
 
 <ins>On the Backend:</ins>
 
