@@ -2,7 +2,7 @@
  Path Finding Problem (Interview Assessment). Python BackEnd Vue FrontEnd.
 
 
- [!Frontend Screenshot](https://raw.githubusercontent.com/HardikSangwan/givemetheodds/main/backend/resources/Frontend_Screenshot.jpg?raw=true)
+<img src="https://raw.githubusercontent.com/HardikSangwan/givemetheodds/main/backend/resources/Frontend_Screenshot.jpg">
 
 
 <ins>On the Backend:</ins>
