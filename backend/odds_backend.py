@@ -117,7 +117,7 @@ async def uploadFile(rebel_filename: UploadFile): #Min Route Probs Not Proper
         route_probs = routeProbs(RoutesGraph, possible_routes, autonomy, bounty_hunters)
         return createJSON(route_probs[0])
     else:
-        return {'route:':'No Way Jose'}
+        return {'route:':'No Way Jose', 'odds': 0}
 
 @app_input.command()
 def init_handle(init_filename: str): 
