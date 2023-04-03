@@ -1,9 +1,11 @@
 # givemetheodds
  Path Finding Problem (Interview Assessment). Python BackEnd Vue FrontEnd.
 
- [!Frontend Screenshot](https://github.com/hardikSangwan/givemetheodds/tree/main/backend/resources/Frontend_Screenshot.png)
+
+ [!Frontend Screenshot](https://raw.githubusercontent.com/HardikSangwan/givemetheodds/main/backend/resources/Frontend_Screenshot.jpg)
 
 <ins>On the Backend:</ins>
+
 python odds_backend.py examples/example1/millennium-falcon.json
 
 The command initializes the millennium-falcon data and then starts up the API Server
